@@ -10,18 +10,22 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       color: #333;
+      overflow-x: hidden;
     }
     header {
-      background-color: #ffffffdd;
-      backdrop-filter: blur(10px);
+      background-color: #ffffffcc;
+      backdrop-filter: blur(20px);
       padding: 1.5rem 2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       position: sticky;
       top: 0;
+      z-index: 1000;
     }
     header h1 {
       margin: 0;
       font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
     }
     main {
       max-width: 800px;
@@ -33,52 +37,72 @@
       margin-bottom: 3rem;
     }
     .hero h2 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+      font-weight: 600;
+      color: #111;
     }
     .hero p {
-      font-size: 1.1rem;
-      color: #555;
+      font-size: 1.2rem;
+      color: #444;
+      line-height: 1.6;
     }
     .section {
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     .section h3 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       border-left: 5px solid #4dabf7;
       padding-left: 0.5rem;
       margin-bottom: 1rem;
     }
     .card {
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
-      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1.7rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
     }
     .footer {
       text-align: center;
       color: #888;
       font-size: 0.9rem;
-      margin-top: 4rem;
+      margin-top: 6rem;
       padding-bottom: 3rem;
     }
     a.button {
       display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 1.2rem;
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.4rem;
       background: #4dabf7;
       color: white;
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+    a.button:hover {
+      background: #339af0;
     }
     @media (max-width: 600px) {
       .hero h2 {
-        font-size: 1.6rem;
+        font-size: 1.7rem;
       }
       .section h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
     }
   </style>
@@ -131,8 +155,24 @@
     <div class="footer">
       모든 작업은 직접 진행합니다. <br/>
       빠르고 깔끔하게, 끝까지 책임지고 만들어드릴게요 🧑‍💻<br/>
-      © 2025  All rights reserved.
+      © 2025 All rights reserved.
     </div>
   </main>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
